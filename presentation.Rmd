@@ -1,0 +1,50 @@
+---
+title: "Visualizing power calculations"
+author: "Diego Costa"
+date: "July 13, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Description
+
+- This is a reproducible pitch presentation for the Data Products Course Project.
+- Have you ever wondered how the variables distribution look like when performing power calculations?
+- Wonder no more, with my App you can visualize it perfectly. 
+
+
+## What does it do
+
+- It plots the kernel density for two random t distributions
+- It performs a power calculation for the difference of given means
+- *It assumes a two-sample and two-sided t test will be done*
+
+## Inputs
+
+- Enter two means to compare (red and blue).
+- Enter your sample size.
+- Enter the desired alpha error.
+- Enter the estimated standard deviation.
+
+## Example output
+
+#### Mean A = 60
+#### Mean B = 70
+#### Sample size = 80, SD = 20, alpha = 0.05 
+```{r, echo = FALSE}
+p <- power.t.test(80, 10, sd = 20, sig.level = 0.05, type = "two.sample")
+```
+#### Calculated power = `r p$power`
+```{r, echo = FALSE}
+plot(density(rt(80, 79, 60)), col = "red", main = "Kernel density plot for random t distributions" , xlab = "", ylab = "")
+lines(density(rt(80, 79, 70)), col = "blue")
+p <- power.t.test(80, 10, sd = 20, sig.level = 0.05, type = "two.sample")
+text(labels(p$power))
+```
+
+
+
+
